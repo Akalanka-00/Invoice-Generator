@@ -1,10 +1,11 @@
 import os
 import pdfkit
+from dotenv import load_dotenv
 
 def generate_invoice_html(invoice_data, template_name="basic.html", file_name="invoice.pdf"):
 
 
-    path_to_wkhtmltopdf = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'  # Update this with the correct path
+    path_to_wkhtmltopdf = os.getenv("path_to_wkhtmltopdf")  # Update this with the correct path
     config = pdfkit.configuration(wkhtmltopdf=path_to_wkhtmltopdf)
     file_path = os.path.join(os.path.dirname(__file__), "../invoices/" + file_name)
     os.makedirs(os.path.join(os.path.dirname(__file__), "../invoices/"), exist_ok=True)
