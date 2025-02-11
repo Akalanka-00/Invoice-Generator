@@ -24,7 +24,7 @@ def generate_invoices(no_of_invoices=1):
         generated_invoice = generate_invoice(customer, items_to_purchase, inventory)
         invoices.append(generated_invoice)
         # generate_invoice_pdf(generated_invoice, generate_random_text() +".pdf")
-        generate_invoice_html(generated_invoice, file_name=generate_random_text() +".pdf")
+        generate_invoice_html(generated_invoice, file_name=generate_random_text() +".pdf", template_name=select_template())
         progress_bar.set_postfix_str(f"\033[32m{progress_bar.n + 1}/{no_of_invoices}\033[0m", refresh=True)
         progress_bar.update(1)
 
@@ -34,3 +34,7 @@ def generate_random_text():
 
     return random_text
 
+def select_template():
+    templates = ["basic.html", "basic_mirror.html"]
+    num = random.randint(1, 9)  # Generate a random integer between 1 and 9
+    return templates[0] if num % 3 == 0 else templates[1]

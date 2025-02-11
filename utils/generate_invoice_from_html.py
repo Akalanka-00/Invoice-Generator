@@ -3,6 +3,7 @@ import pdfkit
 
 def generate_invoice_html(invoice_data, template_name="basic.html", file_name="invoice.pdf"):
 
+
     path_to_wkhtmltopdf = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'  # Update this with the correct path
     config = pdfkit.configuration(wkhtmltopdf=path_to_wkhtmltopdf)
     file_path = os.path.join(os.path.dirname(__file__), "../invoices/" + file_name)
@@ -43,6 +44,7 @@ def generate_invoice_html(invoice_data, template_name="basic.html", file_name="i
 
     # Replace total
     template = template.replace("{{total_amount}}", f"${round(invoice_data['Total Amount'],2)}")
+
 
     pdf_path = file_path.replace(".html", ".pdf")
     if file_path.endswith(".pdf"):

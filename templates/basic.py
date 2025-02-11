@@ -1,6 +1,3 @@
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
-
 
 # Template to generate invoice title and basic info
 def generate_invoice_title(c, invoice_data, width, height):
