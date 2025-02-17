@@ -23,6 +23,7 @@ def download_amazon_data():
 
     if not os.path.exists(os.path.join(absolute_path, amazon_file_name)):
         path = kagglehub.dataset_download("daishinkan002/amazon-mobile-dataset")
+        print(f"Amazon Mobile Dataset downloaded to {path}")
         source_path_amazon = os.path.join(path, amazon_file_name)
         if os.path.isfile(source_path_amazon):
             shutil.move(source_path_amazon, absolute_path)
@@ -43,7 +44,7 @@ def download_signatures_dataset():
     if not os.path.exists(os.path.join(absolute_path, 'signatures')):
         # Download the Handwritten Signatures Dataset
         path_signatures = kagglehub.dataset_download("divyanshrai/handwritten-signatures")
-
+        print("Path to Handwritten Signatures Dataset:", path_signatures)
         zip_file_name = 'signatures.zip'
         zip_file_path = os.path.join(target_directory, zip_file_name)
 
