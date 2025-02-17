@@ -10,10 +10,16 @@ def amazon_data():
 
     data = load_csv(os.path.join(absolute_path, amazon_file_name))
     filtered_data = filter_columns(data)
-    print(filtered_data)
+    return filtered_data
 
 def filter_columns(data):
     filtered_data = []
     for row in data:
-        filtered_data.append(row[1])
+        filtered_data.append({"id": row[0], "name": row[1], "price": currency_refactor(row[2])})
     return filtered_data
+
+def currency_refactor(currency):
+    amount = currency.replace('₹', '').replace(',', '').strip()
+    exchange_rate = 0.012
+    usd_amount = float(amount) * exchange_rate
+    return round(usd_amount, 2)
