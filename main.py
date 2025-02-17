@@ -3,6 +3,7 @@ from data_acquisition import amazon_data
 from data_preparation import clean_data, download_signatures_dataset, clear_caches, download_amazon_data
 from invoice_processing import generate_invoice_dataset
 from invoice_generation import apply_invoice_templates, save_invoices
+from utils.download_from_colab import download_from_colab
 from utils.html_to_pdf import convert_html_to_pdfs
 from utils.init_kaggle import init_kaggle
 from utils.time_calculations import perform_time
@@ -23,6 +24,8 @@ def main():
 
     end_time = datetime.now()
     perform_time(start_time, end_time)
+
+    download_from_colab(is_colab)
 
 def data_preprocessing():
 
