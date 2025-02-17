@@ -5,8 +5,7 @@ from dotenv import load_dotenv
 def generate_invoice_html(invoice_data, template_name="basic.html", file_name="invoice.pdf"):
 
 
-    path_to_wkhtmltopdf = os.getenv("path_to_wkhtmltopdf")  # Update this with the correct path
-    config = pdfkit.configuration(wkhtmltopdf=path_to_wkhtmltopdf)
+    # path_to_wkhtmltopdf = os.getenv("path_to_wkhtmltopdf")  # Update this with the correct path
     file_path = os.path.join(os.path.dirname(__file__), "../invoices/" + file_name)
     os.makedirs(os.path.join(os.path.dirname(__file__), "../invoices/"), exist_ok=True)
 
@@ -46,21 +45,22 @@ def generate_invoice_html(invoice_data, template_name="basic.html", file_name="i
     # Replace total
     template = template.replace("{{total_amount}}", f"${round(invoice_data['Total Amount'],2)}")
 
+    return template
 
-    pdf_path = file_path.replace(".html", ".pdf")
-    if file_path.endswith(".pdf"):
-        file_path = file_path.replace(".pdf", ".html")
-
-    with open(file_path, "w") as file:
-        file.write(template)
-
-    save_html_as_pdf(file_path, pdf_path)
-
-
-
+    # pdf_path = file_path.replace(".html", ".pdf")
+    # if file_path.endswith(".pdf"):
+    #     file_path = file_path.replace(".pdf", ".html")
+    #
+    # with open(file_path, "w") as file:
+    #     file.write(template)
+    #
+    # save_html_as_pdf(file_path, pdf_path)
 
 
-def save_html_as_pdf(html_path, pdf_path):
-    config = pdfkit.configuration(wkhtmltopdf=r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe')
-    pdfkit.from_file(html_path, pdf_path, configuration=config)
-    os.remove(html_path)
+
+
+
+# def save_html_as_pdf(html_path, pdf_path):
+#     config = pdfkit.configuration(wkhtmltopdf=r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe')
+#     pdfkit.from_file(html_path, pdf_path, configuration=config)
+#     os.remove(html_path)
