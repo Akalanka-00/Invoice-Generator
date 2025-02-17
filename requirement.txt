@@ -1,0 +1,6 @@
+tqdm
+pdfkit
+faker
+pandas
+kagglehub
+kagglehub[pandas-datasets]

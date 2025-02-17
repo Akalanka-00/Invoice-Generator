@@ -12,7 +12,7 @@ def convert_html_to_pdfs(html_files):
     pdf_files = []  # Initialize an empty list to hold PDF data
 
     # Initialize progress bar after pdf_files is populated
-    progress_bar = tqdm(range(len(html_files)), desc="Converting Invoices to pdf", unit="invoice", leave=True, file=sys.stdout)
+    progress_bar = tqdm(range(len(html_files)), desc="Converting Invoices to pdf\t", unit="invoice", leave=True, file=sys.stdout)
 
     for idx, html in enumerate(html_files):
         pdf_buffer = io.BytesIO()

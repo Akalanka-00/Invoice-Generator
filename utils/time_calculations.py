@@ -1,7 +1,7 @@
 from datetime import datetime
 
 
-def time_gap(start_time: datetime, end_time: datetime):
+def perform_time(start_time: datetime, end_time: datetime):
     # Calculate the time difference
     time_difference = end_time - start_time
 
