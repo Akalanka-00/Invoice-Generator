@@ -1,19 +1,31 @@
-from datetime import datetime
-
-from generate_invoices.generate_invoices import generate_invoices, save_invoices
-from utils.html_to_pdf import convert_html_to_pdfs
-from utils.time_calculator import time_gap
+from data_acquisition import amazon_data
+from data_preparation import clean_data, download_signatures_dataset, clear_caches, download_amazon_data
+from utils.init_kaggle import init_kaggle
 
 
 def main():
-    start_time = datetime.now()
-    user_input = int(input("How many Invoices do you want to generate: ") ) # This will get the input as a string
-    invoices_html = generate_invoices(user_input)
-    save_invoices(invoices_html)
+    init_kaggle()
 
-    end_time = datetime.now()
-    time_gap(start_time, end_time)
+    # user_input = int(input("How many Invoices do you want to generate: ") )
+    # start_time = datetime.now()
+    #
+    # end_time = datetime.now()
+    # time_gap(start_time, end_time)
 
+    #data_preprocessing()
+    data_acquisition()
+
+def data_preprocessing():
+    is_colab = init_kaggle()
+    clean_data()
+
+    download_amazon_data()
+    download_signatures_dataset()
+    clear_caches()
+    print("Data preparation is complete.")
+
+def data_acquisition():
+    amazon_data()
 
 if __name__ == "__main__":
     main()
