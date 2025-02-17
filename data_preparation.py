@@ -4,14 +4,15 @@ import zipfile
 import shutil
 
 #Clean data
-def clean_data():
-    target_directory = './data'
-    if os.path.exists(target_directory):
-        shutil.rmtree(target_directory)
-        print(f"All files and folders inside {target_directory} have been deleted.")
+def clean_data(is_clean_required=False):
+    if is_clean_required:
+        target_directory = './data'
+        if os.path.exists(target_directory):
+            shutil.rmtree(target_directory)
+            print(f"All files and folders inside {target_directory} have been deleted.")
 
-    os.makedirs(target_directory, exist_ok=True)
-    print(f"The {target_directory} folder has been recreated.")
+        os.makedirs(target_directory, exist_ok=True)
+        print(f"The {target_directory} folder has been recreated.")
 
 
 # Download Amazon_Mobile_Data.csv
@@ -39,20 +40,23 @@ def download_signatures_dataset():
 
     os.makedirs(absolute_path, exist_ok=True)
 
-    # Download the Handwritten Signatures Dataset
-    path_signatures = kagglehub.dataset_download("divyanshrai/handwritten-signatures")
+    if not os.path.exists(os.path.join(absolute_path, 'signatures')):
+        # Download the Handwritten Signatures Dataset
+        path_signatures = kagglehub.dataset_download("divyanshrai/handwritten-signatures")
 
-    zip_file_name = 'signatures.zip'
-    zip_file_path = os.path.join(target_directory, zip_file_name)
+        zip_file_name = 'signatures.zip'
+        zip_file_path = os.path.join(target_directory, zip_file_name)
 
-    with zipfile.ZipFile(zip_file_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
-        for root, dirs, files in os.walk(path_signatures):
-            for file in files:
-                file_path = os.path.join(root, file)
-                zipf.write(file_path, os.path.relpath(file_path, path_signatures))
+        with zipfile.ZipFile(zip_file_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+            for root, dirs, files in os.walk(path_signatures):
+                for file in files:
+                    file_path = os.path.join(root, file)
+                    zipf.write(file_path, os.path.relpath(file_path, path_signatures))
 
-    print(f"Zip file created at: {zip_file_path}")
-    extract_zip(target_directory, zip_file_path)
+        print(f"Zip file created at: {zip_file_path}")
+        extract_zip(target_directory, zip_file_path)
+    else:
+        print("Handwritten Signatures Dataset already exists.")
 
 #Extract the zip file
 def extract_zip(target_directory, zip_file_path):

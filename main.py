@@ -7,14 +7,14 @@ from utils.html_to_pdf import convert_html_to_pdfs
 from utils.init_kaggle import init_kaggle
 from utils.time_calculations import perform_time
 
-
+IS_CLEAN_START_REQUIRED = False
 def main():
     init_kaggle()
 
     user_input = int(input("How many Invoices do you want to generate: ") )
     start_time = datetime.now()
 
-    #data_preprocessing()
+    data_preprocessing()
     data = data_acquisition()
     invoices = generate_invoice_dataset(data, user_input)
     html_invoices = apply_invoice_templates(invoices)
@@ -26,7 +26,7 @@ def main():
 
 def data_preprocessing():
     is_colab = init_kaggle()
-    clean_data()
+    clean_data(IS_CLEAN_START_REQUIRED)
 
     download_amazon_data()
     download_signatures_dataset()
