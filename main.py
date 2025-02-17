@@ -9,7 +9,7 @@ from utils.time_calculations import perform_time
 
 IS_CLEAN_START_REQUIRED = False
 def main():
-    init_kaggle()
+    is_colab = init_kaggle()
 
     user_input = int(input("How many Invoices do you want to generate: ") )
     start_time = datetime.now()
@@ -25,9 +25,8 @@ def main():
     perform_time(start_time, end_time)
 
 def data_preprocessing():
-    is_colab = init_kaggle()
-    clean_data(IS_CLEAN_START_REQUIRED)
 
+    clean_data(IS_CLEAN_START_REQUIRED)
     download_amazon_data()
     download_signatures_dataset()
     clear_caches()

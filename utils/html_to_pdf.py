@@ -4,7 +4,7 @@ import sys
 import pdfkit
 import time
 
-from tqdm import tqdm
+from tqdm.auto import tqdm
 
 
 def convert_html_to_pdfs(html_files):

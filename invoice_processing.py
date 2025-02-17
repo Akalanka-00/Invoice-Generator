@@ -3,7 +3,7 @@ import sys
 from datetime import datetime
 
 from faker import Faker
-from tqdm import tqdm
+from tqdm.auto import tqdm
 
 fake = Faker()
 inventory = []

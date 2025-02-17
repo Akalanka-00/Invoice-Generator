@@ -3,7 +3,7 @@ import random
 import sys
 import time
 
-from tqdm import tqdm
+from tqdm.auto import tqdm
 
 
 def apply_invoice_templates(invoices):
