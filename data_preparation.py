@@ -20,7 +20,7 @@ def download_amazon_data():
     target_directory = './data'
     absolute_path = os.path.abspath(target_directory)
     amazon_file_name = "Amazon_Mobile_Data.csv"
-
+    os.makedirs(absolute_path, exist_ok=True)
     if not os.path.exists(os.path.join(absolute_path, amazon_file_name)):
         path = kagglehub.dataset_download("daishinkan002/amazon-mobile-dataset")
         print(f"Amazon Mobile Dataset downloaded to {path}")
