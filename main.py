@@ -1,5 +1,5 @@
 from datetime import datetime
-from data_acquisition import amazon_data
+from data_acquisition import amazon_data, signature_data
 from data_preparation import clean_data, download_signatures_dataset, clear_caches, download_amazon_data
 from invoice_processing import generate_invoice_dataset
 from invoice_generation import apply_invoice_templates, save_invoices
@@ -19,13 +19,16 @@ def main():
     data = data_acquisition()
     invoices = generate_invoice_dataset(data, user_input)
     html_invoices = apply_invoice_templates(invoices)
-    pdf_invoices = convert_html_to_pdfs(html_invoices)
+    pdf_invoices = convert_html_to_pdfs(html_invoices, is_colab)
     save_invoices(pdf_invoices)
 
     end_time = datetime.now()
     perform_time(start_time, end_time)
 
     download_from_colab(is_colab)
+
+
+    _signature_data = signature_data()
 
 def data_preprocessing():
 
@@ -37,7 +40,8 @@ def data_preprocessing():
 
 def data_acquisition():
     _amazon_data = amazon_data()
-    return _amazon_data
+    _signature_data = signature_data()
+    return {"amazon": _amazon_data, "signature": _signature_data}
 
 if __name__ == "__main__":
     main()

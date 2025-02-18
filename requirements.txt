@@ -4,3 +4,5 @@ faker
 pandas
 kagglehub
 kagglehub[pandas-datasets]
+opencv-python
+numpy

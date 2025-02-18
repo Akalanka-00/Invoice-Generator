@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modern Mobile Invoice</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            margin: 0;
+            background: #f8f9fa;
+        }
+        .invoice-box {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 3rem;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+            border-radius: 12px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+        .logo img {
+            max-width: 120px;
+            height: auto;
+        }
+        .company-info {
+            text-align: right;
+        }
+        .company-info h1 {
+            color: #2b2d42;
+            margin: 0;
+            font-size: 2rem;
+        }
+        .company-info p {
+            color: #6c757d;
+            margin: 0.3rem 0;
+        }
+        .customer-details {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        .customer-details h3 {
+            color: #2b2d42;
+            margin-top: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        th, td {
+            padding: 1rem;
+            text-align: left;
+        }
+        th {
+            background-color: #2b2d42;
+            color: white;
+            font-weight: 500;
+        }
+        td {
+            border-bottom: 1px solid #e9ecef;
+        }
+        .col-num { width: 5%; }
+        .product-title {
+            width: 45%;
+            word-wrap: break-word;
+            line-height: 1.4;
+        }
+        .col-price { width: 15%; }
+        .col-qty { width: 10%; }
+        .col-total { width: 15%; }
+        .totals {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            width: 300px;
+            float: right;
+        }
+        .totals h3 {
+            color: #2b2d42;
+            margin: 0.5rem 0;
+        }
+        .footer {
+            clear: both;
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e9ecef;
+            color: #6c757d;
+        }
+        .signature {
+            text-align: center;
+            margin-top: 3rem;
+        }
+        .signature img {
+            max-width: 200px;
+            height: auto;
+        }
+        .signature p {
+            margin-top: 0.5rem;
+            color: #2b2d42;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-box">
+        <div class="header">
+            <!-- Company Logo on Left -->
+            <div class="logo">
+                <img src="{{company_logo_url}}" alt="Company Logo">
+            </div>
+
+            <!-- Company Details on Right -->
+            <div class="company-info">
+                <h1>{{company_name}}</h1>
+                <p>{{company_address}}</p>
+                <p>{{company_phone}} | {{company_email}}</p>
+                <h2 style="margin-top: 1.5rem;">INVOICE</h2>
+                <p>Invoice #: <strong>{{invoice_number}}</strong> | Date: {{invoice_date}} {{invoice_time}}</p>
+            </div>
+        </div>
+
+        <div class="customer-details">
+            <h3>Bill To:</h3>
+            <p>{{customer_name}}<br>
+            {{customer_address}}<br>
+            Phone: {{customer_phone}}</p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th class="col-num">#</th>
+                    <th class="product-title">Product</th>
+                    <th class="col-price">Price</th>
+                    <th class="col-qty">Qty</th>
+                    <th class="col-total">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td class="col-num">{{loop.index}}</td>
+                    <td class="product-title">{{item.title}}</td>
+                    <td class="col-price">{{item.price}}</td>
+                    <td class="col-qty">{{item.quantity}}</td>
+                    <td class="col-total">{{item.price * item.quantity}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="totals">
+            <p>Subtotal: ${{subtotal}}</p>
+            <p>Tax ({{tax_rate}}%): {{tax_amount}}</p>
+            <h3>Grand Total: {{grand_total}}</h3>
+        </div>
+
+        <!-- Signature Section -->
+        <div class="signature">
+            <img src="{{signature_image_url}}" alt="Signature">
+            <p>{{signed_by_name}}<br>{{signed_by_job_post}}</p>
+        </div>
+
+        <div class="footer">
+            <p>Thank you for your purchase!<br>
+            Warranty: 1 year on all products | Returns accepted within 14 days</p>
+        </div>
+    </div>
+</body>
+</html>

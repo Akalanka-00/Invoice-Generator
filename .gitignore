@@ -1,3 +1,4 @@
 /invoices/
 .env
 /data/
+/processed_data/

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Consulting Invoice</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2C3E50;
+            --secondary-color: #3498DB;
+            --accent-color: #E74C3C;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            color: #2C3E50;
+        }
+
+        .invoice-wrapper {
+            max-width: 800px;
+            margin: 2rem auto;
+            border: 1px solid #eee;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        /* Header Section */
+        .invoice-header {
+            display: -webkit-box; /* Vendor prefix for PDF compatibility */
+            display: flex;
+            -webkit-box-pack: justify;
+            justify-content: space-between;
+            -webkit-box-align: start;
+            align-items: flex-start;
+            flex-wrap: nowrap;
+            padding: 2rem;
+            background: #2C3E50;
+            color: white;
+        }
+
+        .company-branding {
+            -webkit-box-flex: 1;
+            flex: 1;
+            min-width: 0;
+            margin-right: 2rem;
+        }
+
+        .invoice-header img {
+            -webkit-flex-shrink: 0;
+            flex-shrink: 0;
+            width: auto;
+            max-width: 200px;
+            height: auto;
+            -webkit-align-self: center;
+            align-self: center;
+        }
+
+        .company-branding i {
+            font-size: 2.5rem;
+            color: #3498DB;
+        }
+
+        /* Main Content */
+        .invoice-body {
+            padding: 2rem;
+        }
+
+        .invoice-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        /* Items Table */
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+
+        .items-table th {
+            background: #2C3E50;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .items-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .items-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        /* Total Section */
+        .total-section {
+            background: #2C3E50;
+            color: white;
+            padding: 1.5rem;
+            text-align: right;
+            border-radius: 4px;
+        }
+
+        /* Footer */
+        .invoice-footer {
+            background: #2c3e50;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            border-top: 3px solid #3498DB;
+        }
+
+        .watermark {
+            opacity: 0.1;
+            position: fixed;
+            bottom: 30%;
+            right: 20%;
+            transform: rotate(-30deg);
+            font-size: 4rem;
+            pointer-events: none;
+        }
+
+        .tax-summary {
+            background: #f9f9f9;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-wrapper">
+        <!-- Header -->
+        <header class="invoice-header">
+            <div class="company-branding">
+                <div>
+                    <h1>{{company_name}}</h1>
+                    <p>{{company_address}}</p>
+                    <p>{{company_email}}</p>
+                    <p>{{company_phone}}</p>
+                </div>
+            </div>
+        <img src="{{company_logo_url}}" width="200px" alt="Company Logo" style="border-radius: 5px;">
+        </header>
+
+        <!-- Body -->
+        <div class="invoice-body">
+            <div class="invoice-info">
+                <div>
+                    <h3><i class="fas fa-user"></i> Bill To:</h3>
+                    <p>{{customer_name}}<br>
+                    {{customer_address}}<br>
+                    City, Country<br>
+                    Phone: {{customer_phone}}</p>
+                </div>
+
+                <div>
+                    <h3><i class="fas fa-file-invoice"></i> Details:</h3>
+                    <p>Invoice #: {{invoice_number}}<br>
+                    Date: {{invoice_date}} {{invoice_time}}<br>
+<!--                    Due Date: 2023-08-15</p>-->
+                </div>
+            </div>
+
+            <!-- Items Table -->
+            <table class="items-table">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Description</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in items %}
+                <tr>
+                    <td class="col-num">{{loop.index}}</td>
+                    <td class="product-title">{{item.title}}</td>
+                    <td class="col-price">{{item.price}}</td>
+                    <td class="col-qty">{{item.quantity}}</td>
+                    <td class="col-total">{{item.price * item.quantity}}</td>
+                </tr>
+                {% endfor %}
+                    <!-- Add more rows as needed -->
+                </tbody>
+            </table>
+
+            <!-- Total Section -->
+            <div class="tax-summary">
+                <p>Subtotal: ${{subtotal}}</p>
+                <p>Tax ({{tax_rate}}%): ${{tax_amount}}</p>
+            </div>
+
+            <div class="total-section">
+                <h3>TOTAL DUE: ${{grand_total}}</h3>
+            </div>
+
+            <!-- Watermark -->
+            <div class="watermark">PAID</div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="invoice-footer">
+            <p>
+                <i class="fas fa-phone"></i> {{company_phone}} |
+                <i class="fas fa-envelope"></i> {{company_email}} |
+                <i class="fas fa-globe"></i> w{{company_web}}
+            </p>
+            <p>Powered by w/w | Thank you for your business!</p>
+        </footer>
+    </div>
+</body>
+</html>

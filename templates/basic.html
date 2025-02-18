@@ -1,109 +1,212 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Invoice Template</title>
-        <style>
-            .invoice-box {
-                max-width: 800px;
-                margin: auto;
-                padding: 30px;
-                border: 1px solid #eee;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-                font-size: 16px;
-                line-height: 24px;
-                font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-                color: #555;
-            }
-            .invoice-box table {
-                width: 100%;
-                line-height: inherit;
-                text-align: left;
-            }
-            .invoice-box table td {
-                padding: 5px;
-                vertical-align: top;
-            }
-            .invoice-box table tr td:nth-child(2) {
-                text-align: right;
-            }
-            .invoice-box table tr.top table td {
-                padding-bottom: 20px;
-            }
-            .invoice-box table tr.top table td.title {
-                font-size: 45px;
-                line-height: 45px;
-                color: #333;
-            }
-            .invoice-box table tr.information table td {
-                padding-bottom: 40px;
-            }
-            .invoice-box table tr.heading td {
-                background: #eee;
-                border-bottom: 1px solid #ddd;
-                font-weight: bold;
-            }
-            .invoice-box table tr.details td {
-                padding-bottom: 20px;
-            }
-            .invoice-box table tr.item td {
-                border-bottom: 1px solid #eee;
-            }
-            .invoice-box table tr.item.last td {
-                border-bottom: none;
-            }
-            .invoice-box table tr.total td:nth-child(2) {
-                border-top: 2px solid #eee;
-                font-weight: bold;
-            }
-        </style>
-    </head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modern Tech Invoice</title>
+    <style>
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            margin: 0;
+            background: #f8f9ff;
+        }
+        .invoice-box {
+            max-width: 1200px;
+            margin: 2rem auto;
+            background: white;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
 
-    <body>
-        <div class="invoice-box">
-            <table cellpadding="0" cellspacing="0">
-                <tr class="top">
-                    <td colspan="2">
-                        <table>
-                            <tr>
-                                <td class="title">
-                                    <img src="https://sparksuite.github.io/simple-html-invoice-template/images/logo.png" style="width: 100%; max-width: 300px"/>
-                                </td>
-                                <td>
-                                    Invoice #: {{invoice_number}}<br />
-                                    Created: {{invoice_date}}<br />
-                                    Due: {{due_date}}
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr class="information">
-                    <td colspan="2">
-                        <table>
-                            <tr>
-                                <td>
-                                    {{company_name}}<br />
-                                    {{company_address}}
-                                </td>
-                                <td>
-                                    {{customer_name}}<br />
-                                    {{customer_address}}
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr class="heading">
-                    <td>Item</td>
-                    <td>Price</td>
-                </tr>
-                {{items}}
-                <tr class="total">
-                    <td></td>
-                    <td>Total: ${{total_amount}}</td>
-                </tr>
-            </table>
+        /* Left Sidebar */
+        .company-profile {
+            background: #2b2d42;
+            padding: 2rem;
+            color: white;
+        }
+        .company-profile h1 {
+            font-size: 1.8rem;
+            margin: 0 0 1rem 0;
+            color: #fff;
+        }
+        .company-profile p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            line-height: 1.5;
+        }
+
+        /* Main Content */
+        .invoice-content {
+            padding: 3rem;
+            position: relative;
+        }
+
+        /* Header Section */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 3rem;
+        }
+        .invoice-meta {
+            text-align: right;
+        }
+        .invoice-meta h2 {
+            margin: 0 0 1rem 0;
+            color: #2b2d42;
+        }
+
+        /* Customer Details */
+        .customer-details {
+            background: #f8f9ff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        .customer-details h3 {
+            grid-column: 1 / -1;
+            margin: 0 0 1rem 0;
+            color: #2b2d42;
+        }
+
+        /* Product Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        th {
+            background: #f8f9ff;
+            color: #2b2d42;
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 2px solid #e9ecef;
+        }
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #f1f3f5;
+        }
+        .product-title {
+            font-weight: 500;
+            color: #2b2d42;
+        }
+
+        /* Totals Section */
+        .totals {
+            background: #f8f9ff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            width: 300px;
+            float: right;
+        }
+        .totals h3 {
+            margin: 1rem 0 0 0;
+            padding-top: 1rem;
+            border-top: 2px solid #e9ecef;
+        }
+
+        /* Footer */
+        .footer {
+            position: absolute;
+            bottom: 2rem;
+            left: 3rem;
+            right: 3rem;
+            text-align: center;
+            color: #868e96;
+            font-size: 0.9rem;
+        }
+
+        /* Utility Classes */
+        .text-accent { color: #6c5ce7; }
+        .badge {
+            background: #6c5ce7;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-box">
+        <div class="company-profile">
+            <h1>TECHNOVA</h1>
+            <p>Innovation Street<br>
+            Bangalore - 560001<br>
+            GSTIN: 29ABCDE1234F1Z5</p>
+            <p style="margin-top: 2rem;">
+                📞 +91 80 9876 5432<br>
+                📧 contact@technova.in<br>
+                🌐 www.technova.in
+            </p>
         </div>
-    </body>
+
+        <div class="invoice-content">
+            <div class="header">
+                <div>
+                    <span class="badge">PAYMENT DUE</span>
+                    <h2 style="margin-top: 1rem;">INVOICE</h2>
+                </div>
+                <div class="invoice-meta">
+                    <h2 class="text-accent">#{{invoice_number}}</h2>
+                    <p>Date: {{invoice_date}}<br>
+                    Due Date: {{due_date}}</p>
+                </div>
+            </div>
+
+            <div class="customer-details">
+                <h3>Bill To</h3>
+                <div>
+                    <strong>{{customer_name}}</strong><br>
+                    {{customer_address}}<br>
+                    📱 {{customer_phone}}
+                </div>
+                <div>
+                    <strong>Order Details</strong><br>
+                    Order #: {{order_number}}<br>
+                    Payment Method: {{payment_method}}
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-num">#</th>
+                        <th class="product-title">Product</th>
+                        <th class="col-price">Unit Price</th>
+                        <th class="col-qty">Qty</th>
+                        <th class="col-total">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                     {% for item in items %}
+                <tr>
+                    <td class="col-num">{{loop.index}}</td>
+                    <td class="product-title">{{item.title}}</td>
+                    <td class="col-price">{{item.price}}</td>
+                    <td class="col-qty">{{item.quantity}}</td>
+                    <td class="col-total">{{item.price * item.quantity}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="totals">
+                <p>Subtotal: ₹{{subtotal}}</p>
+                <p>Tax ({{tax_rate}}%): {{tax_amount}}</p>
+                <p>Shipping: {{shipping_cost}}</p>
+                <h3 class="text-accent">Grand Total: {{grand_total}}</h3>
+            </div>
+
+            <div class="footer">
+                <p>Payment Terms: Net 30 Days | Late Fee: 1.5% Monthly Interest<br>
+                All amounts in Indian Rupees | Thank you for your business!</p>
+            </div>
+        </div>
+    </div>
+</body>
 </html>

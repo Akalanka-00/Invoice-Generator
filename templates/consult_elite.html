@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{company_name}} Invoice</title>
+    <style>
+        /* Keep existing CSS styles unchanged */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2rem;
+            color: #333;
+        }
+
+        .invoice-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .company-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+
+        .invoice-table th,
+        .invoice-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .invoice-table th {
+            background-color: #f5f5f5;
+        }
+
+        .notes-section {
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: #f9f9f9;
+        }
+
+        .total-section {
+            text-align: right;
+            margin-top: 2rem;
+            font-size: 1.2rem;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid #ddd;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-container">
+        <div class="header">
+            <h1>{{company_name}}</h1>
+            <div>
+                <h2>INVOICE</h2>
+                <p>Date: {{invoice_date}}  {{invoice_time}}</p>
+            </div>
+        </div>
+
+        <div class="company-info">
+            <div>
+                <p>{{company_address}}<br>
+                {{company_city}}<br>
+                {{company_country}}<br>
+                {{company_phone}}</p>
+            </div>
+
+            <div>
+                <p>Invoice #: {{invoice_number}}<br>
+<!--                Due Date: {{due_date}}<br>-->
+<!--                Terms: {{payment_terms}}</p>-->
+            </div>
+        </div>
+
+        <table class="invoice-table">
+            <thead>
+                <tr>
+                    <th>ITEMS</th>
+                    <th>DESCRIPTION</th>
+                    <th>PRICE</th>
+                    <th>QUANTITY</th>
+                    <th>AMOUNT</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td class="col-num">{{loop.index}}</td>
+                    <td class="product-title">{{item.title}}</td>
+                    <td class="col-price">{{item.price}}</td>
+                    <td class="col-qty">{{item.quantity}}</td>
+                    <td class="col-total">{{item.price * item.quantity}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="notes-section">
+            <h3>NOTES:</h3>
+<!--            <p>{{invoice_notes}}</p>-->
+        </div>
+
+        <div class="total-section">
+                <h3>TOTAL: {{grand_total}}</h3>
+            </div>
+
+        <div class="footer">
+            {{company_email}} | {{company_web}}</p>
+            <p>Powered by w/w | Thank you for your business!</p>
+        </div>
+    </div>
+</body>
+</html>
