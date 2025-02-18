@@ -132,6 +132,35 @@
             border-radius: 4px;
             margin: 1rem 0;
         }
+
+        .signature-section {
+        margin-top: 2rem;
+        padding: 1rem 3rem;
+        text-align: right;
+    }
+
+        .signature-line {
+            width: 250px;
+            border-bottom: 2px solid #2C3E50;
+            margin-left: auto;
+            margin-bottom: 0.5rem;
+        }
+
+        .signature-details {
+            font-style: italic;
+            color: #2C3E50;
+        }
+
+        .signature-title {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        @media print {
+            .signature-line {
+                border-color: #2C3E50 !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -203,8 +232,15 @@
                 <h3>TOTAL DUE: ${{grand_total}}</h3>
             </div>
 
-            <!-- Watermark -->
-            <div class="watermark">PAID</div>
+        </div>
+
+        <div class="signature-section">
+            <img src="{{signature_image_url}}" alt="Signature">
+            <div class="signature-line"></div>
+            <div class="signature-details">
+                <p>{{signed_by_name}}<br>
+                <span class="signature-title">{{signed_by_job_post}}</span></p>
+            </div>
         </div>
 
         <!-- Footer -->
@@ -212,7 +248,7 @@
             <p>
                 <i class="fas fa-phone"></i> {{company_phone}} |
                 <i class="fas fa-envelope"></i> {{company_email}} |
-                <i class="fas fa-globe"></i> w{{company_web}}
+                <i class="fas fa-globe"></i> {{company_web}}
             </p>
             <p>Powered by w/w | Thank you for your business!</p>
         </footer>

@@ -65,6 +65,36 @@
             border-top: 1px solid #ddd;
             color: #666;
         }
+
+        .signature-section {
+        margin-top: 3rem;
+        padding: 2rem 0;
+        text-align: right;
+    }
+
+        .signature-line {
+            width: 250px;
+            border-bottom: 2px solid #333;
+            margin-left: auto;
+            margin-bottom: 0.8rem;
+        }
+
+        .signature-details {
+            font-style: italic;
+            color: #444;
+            font-size: 0.9rem;
+        }
+
+        .signature-title {
+            font-size: 0.8em;
+            color: #666;
+        }
+
+        @media print {
+            .signature-line {
+                border-color: #000 !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -123,6 +153,17 @@
         <div class="total-section">
                 <h3>TOTAL: {{grand_total}}</h3>
             </div>
+
+        <div class="signature-section">
+            <img src="{{signature_image_url}}" width="200px" alt="Signature">
+    <div class="signature-line"></div>
+    <div class="signature-details">
+        <p>{{signed_by_name}}<br>
+        <span class="signature-title">{{signed_by_job_post}}</span></p>
+    </div>
+
+</div>
+
 
         <div class="footer">
             {{company_email}} | {{company_web}}</p>

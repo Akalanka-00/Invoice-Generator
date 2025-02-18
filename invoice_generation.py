@@ -24,7 +24,7 @@ def apply_template(invoice, template):
 
 def fetch_templates():
     directory_path = './templates'
-    html_files = [file for file in os.listdir(directory_path) if file.endswith('.html')]
+    html_files = [file for file in os.listdir(directory_path) if file.endswith('consult_elite.html')]
     return html_files
 
 
